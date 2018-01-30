@@ -18,11 +18,12 @@ UOpenDoor::UOpenDoor()
 // Called when the game starts
 void UOpenDoor::BeginPlay()
 {
-	
+	Super::BeginPlay();
+	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 void UOpenDoor::OpenDoor() {
-	Super::BeginPlay();
+	
 
 	AActor* Owner = GetOwner();
 	FRotator NewRotation = FRotator(0.0f, 180.0f, 0.0f);
