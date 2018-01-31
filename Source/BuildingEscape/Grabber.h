@@ -10,6 +10,10 @@
 #include "GameFramework/PlayerController.h"
 #include "Grabber.generated.h"
 
+struct PlayerPOV {
+	FVector Location;
+	FRotator Rotation;
+};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UGrabber : public UActorComponent
@@ -28,14 +32,14 @@ protected:
 	void SetupInputComponent();
 
 	// Setup (assumed) attached physics component
-	void FindPhysicsHandleComponent();
+	void SetupPhysicsHandleComponent();
 
 	// Return hit for first physics body in reach 
 	FHitResult GetFirstPhysicsBodyInReach() const;
 
 public:	
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
 
 private:
 
@@ -43,11 +47,12 @@ private:
 	UPROPERTY(EditAnywhere)
 	float Reach = 100.f;
 
-	APlayerController* Player = nullptr;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
-	UInputComponent* Input = nullptr;
+	UInputComponent* InputComponent = nullptr;
 
 	/// Ray-cast and grab what is in reach
 	void Grab();
 	void Release();
+	PlayerPOV GetPlayerPOV() const;
+	FVector GetEndOfReach() const;
 };
