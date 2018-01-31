@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "DrawDebugHelpers.h"
+#include "Engine/World.h"
+#include "GameFramework/PlayerController.h"
 #include "Grabber.generated.h"
 
 
@@ -21,6 +23,15 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	// Find (assumed) attached input component
+	void SetupInputComponent();
+
+	// Setup (assumed) attached physics component
+	void FindPhysicsHandleComponent();
+
+	// Return hit for first physics body in reach 
+	FHitResult GetFirstPhysicsBodyInReach() const;
 
 public:	
 	// Called every frame
