@@ -1,8 +1,9 @@
 // Copyright Aaron Gravelle
 
+#include "Grabber.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
-#include "Grabber.h"
+
 
 
 #define OUT
@@ -26,12 +27,24 @@ void UGrabber::BeginPlay()
 	
 	/// Look for attached Physics Handle
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	Input = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (PhysicsHandle) {
 		/// Physics handle is found
 	}
 	else {
-		UE_LOG(LogTemp, Error, TEXT("No physics handle found on %s"), *(GetOwner()->GetName()));
+		UE_LOG(LogTemp, Error, TEXT("%s is missing PhysicsHandleComponent"), *(GetOwner()->GetName()));
 	}
+
+	if (Input) {
+		UE_LOG(LogTemp, Warning, TEXT("%s has an InputComponent"), *(GetOwner()->GetName()));
+		/// Bind the input action
+		Input->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		Input->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("%s is missing InputComponent"), *(GetOwner()->GetName()));
+	}
+
 }
 
 
@@ -81,5 +94,13 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	}
 
 	
+}
+
+void UGrabber::Grab() {
+	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed"))
+}
+
+void UGrabber::Release() {
+	UE_LOG(LogTemp, Warning, TEXT("Grab Released"))
 }
 

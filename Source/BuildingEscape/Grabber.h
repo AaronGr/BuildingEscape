@@ -32,7 +32,11 @@ private:
 	UPROPERTY(EditAnywhere)
 	float Reach = 100.f;
 
-	APlayerController * Player = nullptr;
+	APlayerController* Player = nullptr;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
-	
+	UInputComponent* Input = nullptr;
+
+	/// Ray-cast and grab what is in reach
+	void Grab();
+	void Release();
 };
