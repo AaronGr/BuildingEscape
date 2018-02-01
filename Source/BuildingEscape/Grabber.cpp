@@ -97,7 +97,6 @@ FVector UGrabber::GetEndOfReach() const
 
 PlayerPOV UGrabber::GetPlayerPOV() const
 {
-	/// Get player view point this tick
 	PlayerPOV CurrentPOV;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT CurrentPOV.Location, OUT CurrentPOV.Rotation);
 	return CurrentPOV;
